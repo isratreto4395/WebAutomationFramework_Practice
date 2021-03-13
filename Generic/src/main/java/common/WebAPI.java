@@ -4,6 +4,7 @@ import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.LogStatus;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -16,18 +17,41 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 import reporting.ExtentManager;
 import reporting.ExtentTestManager;
+import utilities.DriverUtil;
 
-import java.io.File;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class WebAPI {
+
+    public JavascriptExecutor jscript;
+
     // Config class :
+
+    //properties class
+    static Properties properties;
+
+    public static Properties loadProperties() throws IOException {
+        properties = new Properties();
+        InputStream inputStream = new FileInputStream("../Generic/src/main/secret.properties");
+        properties.load(inputStream);
+        return properties;
+    }
+
+    public void fullPageScroll(){
+        jscript = (JavascriptExecutor)driver;
+        jscript.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+    }
+//    public void fullPageScroll(){
+//        jscript = (JavascriptExecutor)driver;
+//        jscript.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+//    }
 
     //ExtentReport
     public static ExtentReports extent;
@@ -113,17 +137,17 @@ public class WebAPI {
 
     @Parameters({"useCloudEnv","cloudEnvName","OS","os_version","browserName","browserVersion","url"})
     @BeforeMethod
-    public void setUp(boolean useCloudEnv, String cloudEnvName, String OS, String os_version, String browserName, String browserVersion,String url){
+    public void setUp(boolean useCloudEnv, String cloudEnvName, String OS, String os_version, String browserName, String browserVersion,String url) {
         // Platform: Local Machine/ Cloud Machine
         if (useCloudEnv == true){
 
         } else {
-            getLocalDriver(OS,browserName);
+            getLocalDriver(OS,browserName,url);
         }
 
     }
 
-    public WebDriver getLocalDriver(String OS, String browserName){
+    public WebDriver getLocalDriver(String OS, String browserName,String url) {
         if (browserName.equalsIgnoreCase("chrome")){
             if (OS.equalsIgnoreCase("OS X")){
                 System.setProperty("webdriver.chrome.driver","../Generic/BrowserDriver/mac/chromedriver");
@@ -153,7 +177,11 @@ public class WebAPI {
             }
             driver=new InternetExplorerDriver();
         }
-
+        driver.get(url);
+        driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
+        driver.manage().timeouts().pageLoadTimeout(DriverUtil.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(DriverUtil.IMPLICIT_WAIT,TimeUnit.SECONDS);
         return driver;
     }
 
