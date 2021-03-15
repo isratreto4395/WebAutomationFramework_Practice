@@ -142,12 +142,16 @@ public class WebAPI {
         if (useCloudEnv == true){
 
         } else {
-            getLocalDriver(OS,browserName,url);
+            getLocalDriver(OS,browserName);
         }
-
+        driver.get(url);
+        driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
+        driver.manage().timeouts().pageLoadTimeout(DriverUtil.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(DriverUtil.IMPLICIT_WAIT,TimeUnit.SECONDS);
     }
 
-    public WebDriver getLocalDriver(String OS, String browserName,String url) {
+    public WebDriver getLocalDriver(String OS, String browserName) {
         if (browserName.equalsIgnoreCase("chrome")){
             if (OS.equalsIgnoreCase("OS X")){
                 System.setProperty("webdriver.chrome.driver","../Generic/BrowserDriver/mac/chromedriver");
@@ -177,11 +181,6 @@ public class WebAPI {
             }
             driver=new InternetExplorerDriver();
         }
-        driver.get(url);
-        driver.manage().window().maximize();
-        driver.manage().deleteAllCookies();
-        driver.manage().timeouts().pageLoadTimeout(DriverUtil.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(DriverUtil.IMPLICIT_WAIT,TimeUnit.SECONDS);
         return driver;
     }
 

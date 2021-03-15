@@ -15,23 +15,23 @@ public class AddingToCartTest extends WebAPI {
         addToCart = PageFactory.initElements(driver, AddingToCart.class);
     }
 
-    @Test
+    @Test(priority = 1)
     public void checkSearchBoxTest() {
         addToCart.checkSearchBox();
     }
 
-    @Test
+    @Test(priority = 2)
     public void locateSearchElementTest() {
         addToCart.locateSearchElement();
 
     }
 
-    @Test
+    @Test(priority = 3)
     public void addingElementToCartTest() {
         addToCart.addingElementToCart();
     }
 
-    @Test
+    @Test(priority = 4)
     public void checkingTheCartTest() {
         addToCart.addingElementToCart();
     }
