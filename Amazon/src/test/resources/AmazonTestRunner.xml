@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name = "TestSuit">
+<suite name = "Amazon TestSuit">
 
     <parameter name="useCloudEnv" value="false"></parameter>
     <parameter name="cloudEnvName" value="browserStack"></parameter>
@@ -20,7 +20,8 @@
 
         <classes>
 <!--            <class name="homepagetest.HomePageTest"></class>-->
-            <class name="addingtocarttest.AddingToCartTest"></class>
+            <class name="homepagetest1.BestSellertest"></class>
+
         </classes>
     </test>
 </suite>

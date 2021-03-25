@@ -13,6 +13,10 @@
         <module>CheapOair</module>
         <module>TDBank</module>
         <module>Generic</module>
+        <module>Walmart</module>
+        <module>Verizon</module>
+        <module>BBC</module>
+        <module>Geico</module>
     </modules>
 
     <properties>
@@ -147,6 +151,8 @@
                     <testFailureIgnore>true</testFailureIgnore>
                     <!--Test Runner Files-->
                     <suiteXmlFiles>
+                        <suiteXmlFile>target/test-classes/AmazonTestRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/TDBank TestRunner.xml</suiteXmlFile>
                         <suiteXmlFile>target/test-classes/AmazonTestRunner.xml</suiteXmlFile>
                         <!--                        <suiteXmlFile></suiteXmlFile>-->
                         <!-- <suiteXmlFile></suiteXmlFile>-->
